@@ -1,8 +1,9 @@
 from django.urls import path
 
-from .views import create, index
+from .views import create, list
 
+app_name = 'albums'
 urlpatterns = [
-    path('', index, name='list'),
+    path('', list, name='list'),
     path('create/', create, name='create'),
 ]

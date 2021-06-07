@@ -1,6 +1,7 @@
 from django import forms
 from django.shortcuts import redirect, render
 
+from .models import Album
 from .forms import AlbumForm
 
 # Create your views here.
@@ -13,11 +14,12 @@ def create(request):
 
         return redirect('albums:list')
 
-def index(request):
-
+def list(request):
     form = AlbumForm()
+    albums = Album.objects.all()
     context = {
         'title': 'Galería',
-        'form': form
+        'form': form,
+        'albums': albums
     }
     return render(request, 'albums/list.html', context)
