@@ -1,5 +1,6 @@
 from django import forms
 from django.shortcuts import redirect, render
+from django.conf import settings
 
 from .models import Album
 from .forms import AlbumForm
@@ -29,7 +30,8 @@ def create(request):
     form = AlbumForm(request.POST or None)
 
     if request.method == 'POST' and form.is_valid():
-        album = form.save()
+        # album = form.save()
+        album = Album.objects.create_by_aws(settings.BUCKET, form.cleaned_data['title'], form.cleaned_data['description'])
 
         return redirect('albums:list')
 
