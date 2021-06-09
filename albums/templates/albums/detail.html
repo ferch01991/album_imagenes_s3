@@ -1,0 +1,47 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+{% include 'images/snippets/modal.html' %}
+<div class="row">
+    <div class="col">
+        <h1>{{ object }}</h1>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col">
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newImagen">
+            Nueva Imagen
+        </button>
+    </div> 
+</div>
+{{images}}
+<div class="row">
+    <div class="col-8">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Fecha creación</th>
+                    <th>Size</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for image in images %}
+                    <tr>
+                        <td>{{image.name}}</td>
+                        <td>{{image.create_at}}</td>
+                        <td>{{image.size}}</td>
+                        <td></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="col-4">
+        <img src="" alt="" width="300" height="300" id="image-preview">
+    </div>
+</div>
+{% endblock %}

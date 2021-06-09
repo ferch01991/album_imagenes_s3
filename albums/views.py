@@ -1,4 +1,4 @@
-from django import forms
+from images.forms import UploadFileForm
 from django.shortcuts import redirect, render
 from django.conf import settings
 
@@ -13,6 +13,16 @@ from django.views.generic import ListView
 class AlbumDetailView(DetailView):
     model = Album
     template_name = 'albums/detail.html'
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+
+        context['title'] = self.get_object().title
+        context['images'] = self.get_object().images
+        context['form'] = UploadFileForm({
+            'album_id': self.get_object().id
+        })
+        return context
 
 class AlbumListView(ListView):
     model = Album

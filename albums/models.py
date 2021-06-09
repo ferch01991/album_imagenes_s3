@@ -8,7 +8,8 @@ from AWS import create_folder
 class ALbumManager(models.Manager):
     def create_by_aws(self, bucket, title, description):
         key = title.replace(' ', '_').lower()
-        if create_folder(bucket, key):
+        key = create_folder(bucket, key)
+        if key:
             return self.create(title=title, description=description, bucket=bucket, key=key)
 
 class Album(models.Model):
@@ -23,9 +24,10 @@ class Album(models.Model):
     def __str__(self) -> str:
         return self.title
 
-    # @property
-    # def images(self):
-    #     return self.image_set.all()
+    @property
+    def images(self):
+        print(self.image_set.all())
+        return self.image_set.all()
 
     # @property
     # def size(self):
