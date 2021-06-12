@@ -24,6 +24,14 @@ class AlbumDetailView(DetailView):
         })
         return context
 
+def create(request):
+    form = AlbumForm(request.POST or None)
+
+    if request.method == 'POST' and form.is_valid():
+        # album = form.save()
+        album = Album.objects.create_by_aws(settings.BUCKET, form.cleaned_data['title'], form.cleaned_data['description'])
+
+        return redirect('albums:list')
 class AlbumListView(ListView):
     model = Album
     template_name = 'albums/list.html'
@@ -35,14 +43,5 @@ class AlbumListView(ListView):
         context['title'] = 'Galeria'
         context['form'] = AlbumForm()
         return context
-
-def create(request):
-    form = AlbumForm(request.POST or None)
-
-    if request.method == 'POST' and form.is_valid():
-        # album = form.save()
-        album = Album.objects.create_by_aws(settings.BUCKET, form.cleaned_data['title'], form.cleaned_data['description'])
-
-        return redirect('albums:list')
 
 
